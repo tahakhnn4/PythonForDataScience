@@ -64,14 +64,27 @@ elif section == "EDA":
 elif section == "Preprocessing":
     st.subheader("Data Preprocessing")
 
+    # Handle missing numeric values
     numeric_cols = df.select_dtypes(include=np.number).columns
     df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())
 
+    # Handle missing categorical values
     cat_cols = df.select_dtypes(include='object').columns
     df[cat_cols] = df[cat_cols].fillna("Not Specified")
 
     st.success("Missing values handled successfully!")
+
+    # Show missing values summary
+    st.subheader("Missing Values After Preprocessing")
     st.write(df.isnull().sum())
+
+    # Show cleaned dataset
+    st.subheader("Cleaned Dataset Preview")
+    st.dataframe(df)
+
+    # Optional: show dataset shape
+    st.info(f"Dataset Shape After Cleaning: {df.shape[0]} rows × {df.shape[1]} columns")
+
 
 # -----------------------------
 # VISUAL ANALYSIS
